@@ -200,7 +200,11 @@
     background:linear-gradient(100deg,var(--cyan),var(--green));
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  .hero-desc{color:var(--muted);font-size:1.05rem;max-width:520px;margin-bottom:2rem;}
+  .hero-desc{color:var(--muted);font-size:1.05rem;max-width:520px;margin-bottom:1rem;}
+  .hero-tagline{
+    font-family:var(--disp);font-weight:600;font-size:1.05rem;line-height:1.4;
+    color:var(--text);max-width:480px;margin:0 0 1.8rem;
+  }
   .hero-cta-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.6rem;}
   .btn-primary{
     padding:0.85rem 1.5rem;border-radius:9px;
@@ -435,6 +439,58 @@
     transition:background .3s ease,border-color .3s ease,color .3s ease,box-shadow .3s ease;
   }
 
+  /* ---------- MOBILE: GESER SAMPING (bukan ditumpuk ke bawah) ---------- */
+  .hscroll-wrap{position:relative;}
+  .swipe-hint{
+    display:none;align-items:center;gap:0.45rem;
+    font-family:var(--mono);font-size:0.72rem;color:var(--cyan);
+    margin:-1rem 0 1.1rem;
+  }
+  .swipe-hint .arrow{display:inline-block;animation:swipeMove 1.4s ease-in-out infinite;}
+  @keyframes swipeMove{0%,100%{transform:translateX(0);opacity:0.45;}50%{transform:translateX(6px);opacity:1;}}
+
+  @media (max-width:640px){
+    .swipe-hint{display:flex;}
+
+    .info-grid, .materi-grid, #col-todo, #col-review, #col-done, .karya-grid{
+      display:flex !important;
+      flex-wrap:nowrap !important;
+      overflow-x:auto;
+      overflow-y:visible;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      gap:1rem;
+      padding:0.2rem 0.2rem 0.9rem;
+      column-count:unset !important;
+      scrollbar-width:thin;
+    }
+    .info-grid::-webkit-scrollbar, .materi-grid::-webkit-scrollbar,
+    #col-todo::-webkit-scrollbar, #col-review::-webkit-scrollbar, #col-done::-webkit-scrollbar,
+    .karya-grid::-webkit-scrollbar{height:5px;}
+
+    .info-card, .materi-card, .task-card, .karya-item{
+      flex:0 0 78%;
+      scroll-snap-align:start;
+    }
+    .karya-item .media-box{height:170px !important;}
+
+    .hscroll-wrap::after{
+      content:"";position:absolute;top:0;right:0;bottom:0.9rem;width:34px;
+      pointer-events:none;
+    }
+    #info .hscroll-wrap::after, #tugas .hscroll-wrap::after, #karya .hscroll-wrap::after{
+      background:linear-gradient(90deg, transparent, var(--bg-alt) 88%);
+    }
+    #materi .hscroll-wrap::after{
+      background:linear-gradient(90deg, transparent, var(--bg) 88%);
+    }
+
+    .task-board{gap:1.8rem;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .swipe-hint .arrow{animation:none;}
+  }
+
   @media (prefers-reduced-motion: reduce){
     .reveal{transition:none;opacity:1;transform:none;}
     .cursor-blink{animation:none;}
@@ -475,7 +531,8 @@
     <div>
       <div class="eyebrow">Kelas 7 – 12 · Informatika &amp; KKA</div>
       <h1 class="hero-title">Belajar logika,<br>bukan cuma<br><span class="accent">nge-klik.</span></h1>
-      <p class="hero-desc">Portal daring untuk mapel Informatika dan KKA (Koding &amp; Kecerdasan Artifisial) di Attaufiq Jambi - akses semua pemberitahuan hingga materi dalam satu pintu <br><h3>Belajar bukan hanya menghafal,<br> Tapi memahami dan menerapkan.</h3></h3></p>
+      <p class="hero-desc">Portal daring untuk mapel Informatika dan KKA (Koding &amp; Kecerdasan Artifisial) di Attaufiq Jambi — akses semua pemberitahuan hingga materi dalam satu pintu.</p>
+      <h3 class="hero-tagline">Belajar bukan hanya menghafal,<br>tapi memahami dan menerapkan.</h3>
       <div class="hero-cta-row">
         <a href="#materi" class="btn-primary">Buka Materi Kelas →</a>
         <a href="#nilai" class="btn-ghost">Cek Nilai Saya</a>
@@ -509,24 +566,8 @@
     <div class="eyebrow">Ruang Info</div>
     <h2 class="section-title">Kabar &amp; pembaruan kelas</h2>
     <p class="section-sub">Update singkat seputar kegiatan mapel Informatika — dari media sosial, video pembelajaran, sampai dokumentasi kelas.</p>
-    <div class="info-grid">
-      <div class="info-card">
-        <div class="info-thumb ig"><span class="badge">INSTAGRAM</span>📸</div>
-        <div class="info-body"><h4>Praktik jaringan LAN kelas 9</h4><p>Dokumentasi praktik crimping kabel & konfigurasi topologi sederhana.</p><div class="meta">@informatika.attaufiq · 2 hari lalu</div></div>
-      </div>
-      <div class="info-card">
-        <div class="info-thumb vid"><span class="badge">VIDEO</span>▶️</div>
-        <div class="info-body"><h4>Tutorial: Looping di Python</h4><p>Video singkat 8 menit membahas for &amp; while loop untuk kelas 10.</p><div class="meta">Youtube · Kelas 10</div></div>
-      </div>
-      <div class="info-card">
-        <div class="info-thumb gal"><span class="badge">GALERI</span>🖼️</div>
-        <div class="info-body"><h4>Pameran Karya Semester Genap</h4><p>Foto-foto pameran poster infografis hasil proyek kelas 8.</p><div class="meta">24 foto · Aula sekolah</div></div>
-      </div>
-      <div class="info-card">
-        <div class="info-thumb pengumuman"><span class="badge">PENGUMUMAN</span>📢</div>
-        <div class="info-body"><h4>Jadwal UH Bab Algoritma</h4><p>Ulangan harian kelas 11 dilaksanakan pekan depan, jangan lupa belajar.</p><div class="meta">Berlaku · Kelas 11</div></div>
-      </div>
-    </div>
+    <div class="swipe-hint"><span>Geser untuk lihat lainnya</span><span class="arrow">→</span></div>
+    <div class="hscroll-wrap"><div class="info-grid"></div></div>
   </div>
 </section>
 
@@ -537,7 +578,8 @@
     <p class="section-sub">Pilih mapel dan kelas untuk melihat topik yang sedang dan akan dipelajari, mengikuti alur Kurikulum Merdeka.</p>
     <div class="subject-switch" id="materiSubjectSwitch"></div>
     <div class="tabs" id="materiTabs"></div>
-    <div class="materi-grid" id="materiGrid"></div>
+    <div class="swipe-hint"><span>Geser untuk lihat lainnya</span><span class="arrow">→</span></div>
+    <div class="hscroll-wrap"><div class="materi-grid" id="materiGrid"></div></div>
   </div>
 </section>
 
@@ -547,18 +589,19 @@
     <h2 class="section-title">Tugas &amp; kuis berjalan</h2>
     <p class="section-sub">Pantau apa yang perlu dikumpulkan minggu ini, dipisah per mapel supaya tidak tertukar.</p>
     <div class="subject-switch" id="tugasSubjectSwitch"></div>
+    <div class="swipe-hint"><span>Geser tiap kolom untuk lihat lainnya</span><span class="arrow">→</span></div>
     <div class="task-board">
       <div class="task-col">
         <h5>Belum dikerjakan <span class="count" id="cnt-todo">0</span></h5>
-        <div id="col-todo"></div>
+        <div class="hscroll-wrap"><div id="col-todo"></div></div>
       </div>
       <div class="task-col">
         <h5>Menunggu penilaian <span class="count" id="cnt-review">0</span></h5>
-        <div id="col-review"></div>
+        <div class="hscroll-wrap"><div id="col-review"></div></div>
       </div>
       <div class="task-col">
         <h5>Selesai <span class="count" id="cnt-done">0</span></h5>
-        <div id="col-done"></div>
+        <div class="hscroll-wrap"><div id="col-done"></div></div>
       </div>
     </div>
   </div>
@@ -568,7 +611,7 @@
   <div class="container reveal">
     <div class="eyebrow">Ruang Hasil</div>
     <h2 class="section-title">Cek nilai</h2>
-    <p class="section-sub">Masukkan NISN untuk melihat rekap nilai Informatika. (Tampilan demo dengan data contoh — versi produksi akan tersambung ke rekap nilai guru.)</p>
+    <p class="section-sub">Masukkan NISN untuk melihat rekap nilai. Data diambil langsung dari spreadsheet guru.</p>
     <div class="nilai-wrap">
       <div class="nilai-form">
         <label>NISN / Nomor Induk</label>
@@ -579,7 +622,7 @@
           <option value="KKA">KKA (Koding & Kecerdasan Artifisial)</option>
         </select>
         <button class="btn-block" onclick="cekNilai()">Tampilkan Nilai</button>
-        <div class="nilai-hint">Coba NISN demo: 3312001, 3312002, atau 3312003</div>
+        <div class="nilai-hint">Masukkan NISN sesuai data sekolah</div>
       </div>
       <div class="nilai-result" id="nilaiResult">
         <div class="nilai-empty">
@@ -598,7 +641,8 @@
     <p class="section-sub">Dokumentasi proyek, website, poster, video, hingga proyek koding & AI hasil karya siswa.</p>
     <div class="subject-switch" id="karyaSubjectSwitch"></div>
     <div class="karya-filter" id="karyaFilter"></div>
-    <div class="karya-grid" id="karyaGrid"></div>
+    <div class="swipe-hint"><span>Geser untuk lihat lainnya</span><span class="arrow">→</span></div>
+    <div class="hscroll-wrap"><div class="karya-grid" id="karyaGrid"></div></div>
   </div>
 </section>
 
@@ -606,7 +650,7 @@
   <div class="container reveal">
     <h2>Punya pertanyaan seputar tugas atau materi?</h2>
     <p>Hubungi langsung guru ICT (Informatic and Communication Technology), Ayah Wahyu Dwi Prasetyo, S.Kom.Gr, di ruang guru atau Lab ICT 1.</p>
-    <a href="https://wa.me/+6285290699692" class="btn-primary">Hubungi Teacher ICT (Informatic and Communication Technology) →</a>
+    <a href="https://wa.me/6285290699692" class="btn-primary">Hubungi Teacher ICT →</a>
   </div>
 </section>
 
@@ -616,9 +660,9 @@
       <div>
         <div class="brand" style="margin-bottom:1rem;">
           <div class="brand-mark">&lt;/&gt;</div>
-          <div>INFORMATIKA<small>SMP–SMA Attaufiq · Jambi</small></div>
+          <div>INF &amp; KKA<small>SMP–SMA Attaufiq · Jambi</small></div>
         </div>
-        <p style="color:var(--muted);font-size:0.85rem;max-width:320px;">Portal pembelajaran daring mapel Informatika, diampu oleh Wahyu Dwi Prasetyo, S.Kom — guru Informatika kelas 7 hingga 12.</p>
+        <p style="color:var(--muted);font-size:0.85rem;max-width:320px;">Portal pembelajaran daring mapel Informatika &amp; KKA, diampu oleh Wahyu Dwi Prasetyo, S.Kom.Gr — guru ICT kelas 7 hingga 12.</p>
       </div>
       <div>
         <h5>Navigasi</h5>
@@ -634,13 +678,13 @@
         <ul>
           <li><a href="#">Yayasan Attaufiq Jambi</a></li>
           <li><a href="https://report2025.vercel.app/porto/index.html">Profil Guru</a></li>
-          <li><a href="https://wa.me/+6285290699692">Kontak &amp; Alamat</a></li>
+          <li><a href="https://wa.me/6285290699692">Kontak &amp; Alamat</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Mapel Informatika · Attaufiq Jambi</span>
-      <span>Dibuat oleh Wahyu Dwi Prasetyo, S.Kom.</span>
+      <span>© 2026 Informatika &amp; KKA · Attaufiq Jambi</span>
+      <span>Dibuat oleh Wahyu Dwi Prasetyo, S.Kom.Gr.</span>
     </div>
   </div>
 </footer>
@@ -859,7 +903,7 @@ function cekNilai(){
   const box = document.getElementById('nilaiResult');
   const rows = NILAI_ALL.filter(n=>n.NISN===nisn && n.Mapel===mapel);
   if(!rows.length){
-    box.innerHTML = `<div class="nilai-empty"><div class="icon">⚠️</div><div>Data untuk NISN ${nisn||'(kosong)'} pada mapel ${mapel} tidak ditemukan.<br>Coba 3312001, 3312002, atau 3312003.</div></div>`;
+    box.innerHTML = `<div class="nilai-empty"><div class="icon">⚠️</div><div>Data untuk NISN ${nisn||'(kosong)'} pada mapel ${mapel} tidak ditemukan.</div></div>`;
     return;
   }
   const nama = rows[0].Nama, kelas = rows[0].Kelas;
