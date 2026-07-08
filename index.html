@@ -660,11 +660,11 @@
   (GitHub Pages, hosting sekolah, dll), fetch ke Google Sheets akan berjalan normal di browser.
 */
 const SHEET_URLS = {
-  materi: "",
-  tugas: "",
-  nilai: "",
-  karya: "",
-  info: "",
+  materi: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQcsoSottRastpnwgSl8pSf1Qvk3fEszZm_x0zIJDmNGnnZdEbo8cfu2THjfT1MnLuys3soUykIMRDk/pub?gid=0&single=true&output=csv",
+  tugas: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQcsoSottRastpnwgSl8pSf1Qvk3fEszZm_x0zIJDmNGnnZdEbo8cfu2THjfT1MnLuys3soUykIMRDk/pub?gid=287326237&single=true&output=csv",
+  nilai: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQcsoSottRastpnwgSl8pSf1Qvk3fEszZm_x0zIJDmNGnnZdEbo8cfu2THjfT1MnLuys3soUykIMRDk/pub?gid=1026703172&single=true&output=csv",
+  karya: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQcsoSottRastpnwgSl8pSf1Qvk3fEszZm_x0zIJDmNGnnZdEbo8cfu2THjfT1MnLuys3soUykIMRDk/pub?gid=1183817522&single=true&output=csv",
+  info: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQcsoSottRastpnwgSl8pSf1Qvk3fEszZm_x0zIJDmNGnnZdEbo8cfu2THjfT1MnLuys3soUykIMRDk/pub?gid=614160338&single=true&output=csv",
 };
 
 /* ===================== PARSER CSV SEDERHANA (mendukung tanda kutip) ===================== */
@@ -738,109 +738,14 @@ function linkHint(link){
 }
 
 /* ===================== DATA CONTOH (fallback jika sheet belum tersambung) ===================== */
-const DEFAULT_MATERI = [
-  {Mapel:"Informatika",Kelas:"Kelas 7",Urutan:"1",Judul:"Berpikir Komputasional",Deskripsi:"Dekomposisi, pengenalan pola, abstraksi, dan algoritma dasar lewat studi kasus sehari-hari.",Tag:"BK",Link:"https://example.com/materi/berpikir-komputasional",Image:"https://picsum.photos/seed/materi01/600/400"},
-  {Mapel:"Informatika",Kelas:"Kelas 7",Urutan:"2",Judul:"Pengenalan Perangkat TIK",Deskripsi:"Mengenal komponen komputer, sistem operasi, dan etika digital dasar.",Tag:"TIK"},
-  {Mapel:"Informatika",Kelas:"Kelas 7",Urutan:"3",Judul:"Jaringan Internet Dasar",Deskripsi:"Bagaimana internet bekerja: alamat IP, browser, dan mesin pencari.",Tag:"JKI"},
-  {Mapel:"Informatika",Kelas:"Kelas 8",Urutan:"1",Judul:"Algoritma & Flowchart",Deskripsi:"Menyusun langkah penyelesaian masalah dalam bentuk diagram alir.",Tag:"AP"},
-  {Mapel:"Informatika",Kelas:"Kelas 8",Urutan:"2",Judul:"Pengantar Pemrograman Blok",Deskripsi:"Logika pemrograman visual menggunakan Scratch untuk projek interaktif.",Tag:"AP"},
-  {Mapel:"Informatika",Kelas:"Kelas 8",Urutan:"3",Judul:"Analisis Data Sederhana",Deskripsi:"Mengolah data dengan spreadsheet: rumus, grafik, dan filter dasar.",Tag:"AD"},
-  {Mapel:"Informatika",Kelas:"Kelas 9",Urutan:"1",Judul:"Jaringan Komputer & Internet",Deskripsi:"Topologi jaringan, kabel LAN, dan konfigurasi router sederhana.",Tag:"JKI"},
-  {Mapel:"Informatika",Kelas:"Kelas 9",Urutan:"2",Judul:"Dampak Sosial Informatika",Deskripsi:"Etika bermedia sosial, jejak digital, dan keamanan data pribadi.",Tag:"DSI"},
-  {Mapel:"Informatika",Kelas:"Kelas 9",Urutan:"3",Judul:"Proyek Akhir: Website Sekolah",Deskripsi:"Kelompok merancang halaman web sederhana dengan HTML & CSS.",Tag:"PLB"},
-  {Mapel:"Informatika",Kelas:"Kelas 10",Urutan:"1",Judul:"Algoritma Pemrograman Dasar",Deskripsi:"Variabel, percabangan, dan perulangan menggunakan Python.",Tag:"AP"},
-  {Mapel:"Informatika",Kelas:"Kelas 10",Urutan:"2",Judul:"Struktur Data Sederhana",Deskripsi:"List, dictionary, dan studi kasus pengolahan data siswa.",Tag:"AP"},
-  {Mapel:"Informatika",Kelas:"Kelas 10",Urutan:"3",Judul:"Sistem Komputer",Deskripsi:"Arsitektur von Neumann, representasi data biner, dan logika boolean.",Tag:"SK"},
-  {Mapel:"Informatika",Kelas:"Kelas 11",Urutan:"1",Judul:"Basis Data Relasional",Deskripsi:"Konsep tabel, relasi, dan query dasar SQL untuk pengolahan data.",Tag:"BD"},
-  {Mapel:"Informatika",Kelas:"Kelas 11",Urutan:"2",Judul:"Pemrograman Berorientasi Objek",Deskripsi:"Kelas, objek, dan pewarisan pada studi kasus aplikasi sekolah.",Tag:"AP"},
-  {Mapel:"Informatika",Kelas:"Kelas 11",Urutan:"3",Judul:"Proyek Kelompok: Sistem Informasi",Deskripsi:"Merancang prototipe sistem informasi sekolah sederhana.",Tag:"PLB"},
-  {Mapel:"Informatika",Kelas:"Kelas 12",Urutan:"1",Judul:"Pengembangan Aplikasi Web",Deskripsi:"Integrasi front-end & back-end sederhana untuk proyek akhir.",Tag:"PLB"},
-  {Mapel:"Informatika",Kelas:"Kelas 12",Urutan:"2",Judul:"Praktik Lintas Bidang",Deskripsi:"Proyek kolaboratif memecahkan masalah nyata di lingkungan sekolah.",Tag:"PLB"},
-  {Mapel:"Informatika",Kelas:"Kelas 12",Urutan:"3",Judul:"Persiapan Portofolio Digital",Deskripsi:"Menyusun dokumentasi karya selama SMA untuk portofolio akhir.",Tag:"DSI"},
-  {Mapel:"KKA",Kelas:"Kelas 7",Urutan:"1",Judul:"Pengantar Coding dengan Blok",Deskripsi:"Melatih logika program lewat Scratch/Blockly sebagai langkah awal computational thinking.",Tag:"KOD"},
-  {Mapel:"KKA",Kelas:"Kelas 7",Urutan:"2",Judul:"AI di Sekitar Kita",Deskripsi:"Mengenal contoh kecerdasan buatan dalam aplikasi sehari-hari seperti asisten suara dan rekomendasi.",Tag:"AI"},
-  {Mapel:"KKA",Kelas:"Kelas 7",Urutan:"3",Judul:"Data dan Pola Sederhana",Deskripsi:"Mengenali pola dari kumpulan data sederhana sebagai dasar berpikir AI.",Tag:"DATA"},
-  {Mapel:"KKA",Kelas:"Kelas 8",Urutan:"1",Judul:"Pemrograman Teks Dasar",Deskripsi:"Transisi dari blok ke bahasa teks sederhana (Python pemula).",Tag:"KOD"},
-  {Mapel:"KKA",Kelas:"Kelas 8",Urutan:"2",Judul:"Mengenal Dataset",Deskripsi:"Apa itu data latih, cara mengumpulkan dan merapikan data sederhana.",Tag:"DATA"},
-  {Mapel:"KKA",Kelas:"Kelas 8",Urutan:"3",Judul:"Membuat Chatbot Sederhana",Deskripsi:"Menyusun chatbot berbasis aturan (rule-based) untuk merespons pertanyaan.",Tag:"AI"},
-  {Mapel:"KKA",Kelas:"Kelas 9",Urutan:"1",Judul:"Fungsi dan Struktur Kontrol",Deskripsi:"Pemrograman Python: fungsi, percabangan, dan perulangan tingkat lanjut.",Tag:"KOD"},
-  {Mapel:"KKA",Kelas:"Kelas 9",Urutan:"2",Judul:"Klasifikasi Gambar dengan Teachable Machine",Deskripsi:"Praktik melatih model AI sederhana untuk mengenali gambar.",Tag:"AI"},
-  {Mapel:"KKA",Kelas:"Kelas 9",Urutan:"3",Judul:"Proyek Mini: Alat Bantu Belajar Berbasis AI",Deskripsi:"Kelompok merancang alat sederhana memakai model AI siap pakai.",Tag:"PRO"},
-  {Mapel:"KKA",Kelas:"Kelas 10",Urutan:"1",Judul:"Python Lanjutan",Deskripsi:"List, dictionary, dan manipulasi data untuk kebutuhan AI.",Tag:"KOD"},
-  {Mapel:"KKA",Kelas:"Kelas 10",Urutan:"2",Judul:"Pengantar Machine Learning",Deskripsi:"Konsep supervised vs unsupervised learning lewat studi kasus.",Tag:"AI"},
-  {Mapel:"KKA",Kelas:"Kelas 10",Urutan:"3",Judul:"Etika dan Bias dalam AI",Deskripsi:"Diskusi dampak sosial serta bias pada sistem kecerdasan buatan.",Tag:"ETIKA"},
-  {Mapel:"KKA",Kelas:"Kelas 11",Urutan:"1",Judul:"Algoritma Klasifikasi Dasar",Deskripsi:"Decision tree dan k-nearest neighbor secara konseptual dan praktik ringan.",Tag:"AI"},
-  {Mapel:"KKA",Kelas:"Kelas 11",Urutan:"2",Judul:"Computer Vision Dasar",Deskripsi:"Mengenal deteksi objek sederhana menggunakan pustaka siap pakai.",Tag:"AI"},
-  {Mapel:"KKA",Kelas:"Kelas 11",Urutan:"3",Judul:"Proyek Kolaboratif: Prototipe AI Sekolah",Deskripsi:"Merancang prototipe pemanfaatan AI untuk kebutuhan sekolah.",Tag:"PRO"},
-  {Mapel:"KKA",Kelas:"Kelas 12",Urutan:"1",Judul:"Proyek Akhir Koding & AI",Deskripsi:"Mengembangkan aplikasi terapan yang mengintegrasikan model AI sederhana.",Tag:"PRO"},
-  {Mapel:"KKA",Kelas:"Kelas 12",Urutan:"2",Judul:"Model Bahasa & Generative AI",Deskripsi:"Pengantar cara kerja model bahasa dan penggunaannya secara bertanggung jawab.",Tag:"AI"},
-  {Mapel:"KKA",Kelas:"Kelas 12",Urutan:"3",Judul:"Portofolio Karya Koding & AI",Deskripsi:"Menyusun dokumentasi karya selama belajar untuk portofolio akhir.",Tag:"PORTO"},
-];
-
-const DEFAULT_TUGAS = [
-  {Mapel:"Informatika",Kelas:"Kelas 8",Jenis:"Tugas",Judul:"Membuat Flowchart Algoritma Piket",Deskripsi:"Kumpulkan dalam format PDF.",Status:"Belum","Info Waktu":"Tenggat: 10 Jul",Link:"https://example.com/tugas/flowchart-piket",Image:"https://picsum.photos/seed/tugas01/600/400"},
-  {Mapel:"Informatika",Kelas:"Kelas 10",Jenis:"Kuis",Judul:"Kuis Representasi Biner",Deskripsi:"15 soal pilihan ganda, 20 menit.",Status:"Belum","Info Waktu":"Buka: 9 Jul"},
-  {Mapel:"Informatika",Kelas:"Kelas 11",Jenis:"Tugas",Judul:"Rancangan ERD Basis Data",Deskripsi:"Proyek kelompok 3 orang.",Status:"Belum","Info Waktu":"Tenggat: 14 Jul"},
-  {Mapel:"Informatika",Kelas:"Kelas 9",Jenis:"Tugas",Judul:"Website Profil Sekolah (HTML/CSS)",Deskripsi:"Menunggu penilaian guru.",Status:"Menunggu","Info Waktu":"Dikumpul: 3 Jul"},
-  {Mapel:"Informatika",Kelas:"Kelas 7",Jenis:"Kuis",Judul:"Kuis Etika Digital",Deskripsi:"Hasil sedang diperiksa.",Status:"Menunggu","Info Waktu":"Dikumpul: 5 Jul"},
-  {Mapel:"Informatika",Kelas:"Kelas 9",Jenis:"Tugas",Judul:"Infografis Jejak Digital",Deskripsi:"Nilai 92, sudah dikembalikan.",Status:"Selesai","Info Waktu":"Selesai: 28 Jun"},
-  {Mapel:"Informatika",Kelas:"Kelas 10",Jenis:"Kuis",Judul:"Kuis Loop Python",Deskripsi:"Nilai rata-rata kelas 85.",Status:"Selesai","Info Waktu":"Selesai: 25 Jun"},
-  {Mapel:"KKA",Kelas:"Kelas 9",Jenis:"Tugas",Judul:"Melatih Model Klasifikasi Gambar",Deskripsi:"Gunakan Teachable Machine, kumpulkan 3 kategori gambar.",Status:"Belum","Info Waktu":"Tenggat: 12 Jul"},
-  {Mapel:"KKA",Kelas:"Kelas 8",Jenis:"Kuis",Judul:"Kuis Logika Chatbot",Deskripsi:"10 soal tentang aturan respons chatbot sederhana.",Status:"Belum","Info Waktu":"Buka: 11 Jul"},
-  {Mapel:"KKA",Kelas:"Kelas 7",Jenis:"Tugas",Judul:"Proyek Blok: Animasi Interaktif",Deskripsi:"Membuat animasi sederhana di Scratch.",Status:"Belum","Info Waktu":"Tenggat: 13 Jul"},
-  {Mapel:"KKA",Kelas:"Kelas 11",Jenis:"Tugas",Judul:"Prototipe Computer Vision",Deskripsi:"Kelompok menguji deteksi objek sederhana.",Status:"Menunggu","Info Waktu":"Dikumpul: 4 Jul"},
-  {Mapel:"KKA",Kelas:"Kelas 12",Jenis:"Tugas",Judul:"Draf Proyek Akhir AI",Deskripsi:"Nilai 90, sudah direview.",Status:"Selesai","Info Waktu":"Selesai: 27 Jun"},
-  {Mapel:"KKA",Kelas:"Kelas 10",Jenis:"Kuis",Judul:"Kuis Konsep Machine Learning",Deskripsi:"Nilai rata-rata kelas 81.",Status:"Selesai","Info Waktu":"Selesai: 26 Jun"},
-];
-
-const DEFAULT_NILAI = [
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"Informatika",Komponen:"Tugas Harian",Skor:"88"},
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"Informatika",Komponen:"Kuis",Skor:"82"},
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"Informatika",Komponen:"Proyek",Skor:"90"},
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"Informatika",Komponen:"UH",Skor:"85"},
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"KKA",Komponen:"Tugas Harian",Skor:"80"},
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"KKA",Komponen:"Kuis",Skor:"75"},
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"KKA",Komponen:"Proyek",Skor:"88"},
-  {NISN:"3312001",Nama:"Ahmad Fauzan",Kelas:"Kelas 10",Mapel:"KKA",Komponen:"UH",Skor:"79"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"Informatika",Komponen:"Tugas Harian",Skor:"95"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"Informatika",Komponen:"Kuis",Skor:"91"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"Informatika",Komponen:"Proyek",Skor:"97"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"Informatika",Komponen:"UH",Skor:"93"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"KKA",Komponen:"Tugas Harian",Skor:"93"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"KKA",Komponen:"Kuis",Skor:"89"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"KKA",Komponen:"Proyek",Skor:"95"},
-  {NISN:"3312002",Nama:"Siti Nur Azizah",Kelas:"Kelas 9",Mapel:"KKA",Komponen:"UH",Skor:"90"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"Informatika",Komponen:"Tugas Harian",Skor:"76"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"Informatika",Komponen:"Kuis",Skor:"70"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"Informatika",Komponen:"Proyek",Skor:"84"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"Informatika",Komponen:"UH",Skor:"78"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"KKA",Komponen:"Tugas Harian",Skor:"70"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"KKA",Komponen:"Kuis",Skor:"65"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"KKA",Komponen:"Proyek",Skor:"79"},
-  {NISN:"3312003",Nama:"Rizky Maulana",Kelas:"Kelas 11",Mapel:"KKA",Komponen:"UH",Skor:"72"},
-];
-
-const DEFAULT_KARYA = [
-  {Mapel:"Informatika",Kategori:"Website",Judul:"Landing Page Koperasi Sekolah",Pembuat:"Kelompok 3",Kelas:"Kelas 9",Link:"https://example.com/karya/koperasi-sekolah",Image:"https://picsum.photos/seed/karya01/500/650"},
-  {Mapel:"Informatika",Kategori:"Poster",Judul:"Infografis Bahaya Cyberbullying",Pembuat:"Aisyah R.",Kelas:"Kelas 8"},
-  {Mapel:"Informatika",Kategori:"Game",Judul:"Game Edukasi Tebak Kosakata",Pembuat:"Kelompok 1",Kelas:"Kelas 10"},
-  {Mapel:"Informatika",Kategori:"Video",Judul:"Dokumenter Mini: Sehari di Lab Komputer",Pembuat:"Kelompok 5",Kelas:"Kelas 12"},
-  {Mapel:"Informatika",Kategori:"Website",Judul:"Sistem Presensi Sederhana",Pembuat:"Rizky M.",Kelas:"Kelas 11"},
-  {Mapel:"Informatika",Kategori:"Poster",Judul:"Poster Algoritma Sehari-hari",Pembuat:"Kelompok 2",Kelas:"Kelas 7"},
-  {Mapel:"Informatika",Kategori:"Game",Judul:"Kuis Interaktif Jaringan Komputer",Pembuat:"Kelompok 4",Kelas:"Kelas 9"},
-  {Mapel:"Informatika",Kategori:"Video",Judul:"Tutorial Scratch untuk Pemula",Pembuat:"Nabila S.",Kelas:"Kelas 8"},
-  {Mapel:"KKA",Kategori:"Chatbot",Judul:"Chatbot Tanya Jawab Perpustakaan",Pembuat:"Kelompok 2",Kelas:"Kelas 8"},
-  {Mapel:"KKA",Kategori:"Model AI",Judul:"Klasifikasi Sampah Organik & Anorganik",Pembuat:"Kelompok 4",Kelas:"Kelas 9"},
-  {Mapel:"KKA",Kategori:"Computer Vision",Judul:"Deteksi Kehadiran Wajah Sederhana",Pembuat:"Kelompok 1",Kelas:"Kelas 11"},
-  {Mapel:"KKA",Kategori:"Aplikasi",Judul:"Aplikasi Rekomendasi Buku Bacaan",Pembuat:"Kelompok 3",Kelas:"Kelas 12"},
-];
-
-const DEFAULT_INFO = [
-  {Jenis:"Instagram",Judul:"Praktik jaringan LAN kelas 9",Deskripsi:"Dokumentasi praktik crimping kabel & konfigurasi topologi sederhana.","Info Tambahan":"@informatika.attaufiq - 2 hari lalu",Link:"https://instagram.com/informatika.attaufiq",Image:"https://picsum.photos/seed/info01/600/400"},
-  {Jenis:"Video",Judul:"Tutorial: Looping di Python",Deskripsi:"Video singkat 8 menit membahas for & while loop untuk kelas 10.","Info Tambahan":"Youtube - Kelas 10"},
-  {Jenis:"Galeri",Judul:"Pameran Karya Semester Genap",Deskripsi:"Foto-foto pameran poster infografis hasil proyek kelas 8.","Info Tambahan":"24 foto - Aula sekolah"},
-  {Jenis:"Pengumuman",Judul:"Jadwal UH Bab Algoritma",Deskripsi:"Ulangan harian kelas 11 dilaksanakan pekan depan.","Info Tambahan":"Berlaku - Kelas 11"},
-];
+/* Data contoh sudah dihapus -- website sekarang murni mengambil data dari Google Sheets (SHEET_URLS di atas).
+   Array kosong di bawah ini hanya jaring pengaman: kalau sheet gagal dimuat (mis. sedang offline),
+   bagian terkait akan menampilkan pesan "belum ada data" alih-alih data contoh/palsu. */
+const DEFAULT_MATERI = [];
+const DEFAULT_TUGAS = [];
+const DEFAULT_NILAI = [];
+const DEFAULT_KARYA = [];
+const DEFAULT_INFO = [];
 
 /* ===================== STATE ===================== */
 let MATERI_ALL = DEFAULT_MATERI;
