@@ -401,8 +401,9 @@
 
   /* ---------- TUGAS & KUIS ---------- */
   #tugas{background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-  .task-board{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:2.4rem;}
-  @media(max-width:920px){.task-board{grid-template-columns:1fr;}}
+  .task-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.3rem;margin-top:2.4rem;}
+  @media(max-width:920px){.task-board{grid-template-columns:minmax(0,1fr);}}
+  .task-col{min-width:0;}
   .task-col h5{font-family:var(--mono);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
   .task-col h5 .count{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0.05rem 0.55rem;font-size:0.7rem;}
   .task-card{
