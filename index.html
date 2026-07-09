@@ -151,10 +151,56 @@
     white-space:nowrap;
   }
   .nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(38,217,238,0.25);}
-  .nav-toggle{display:none;background:none;color:var(--text);font-size:1.4rem;}
+  .nav-toggle{
+    display:none;background:var(--surface);border:1px solid var(--border);
+    width:40px;height:36px;border-radius:8px;flex-shrink:0;
+    flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  }
+  .nav-toggle span{width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .25s ease, opacity .25s ease;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
   @media(max-width:860px){
     .nav-links{display:none;}
-    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+    .nav-toggle{display:flex;}
+  }
+
+  /* ---------- MOBILE SIDEBAR ---------- */
+  .mobile-sidebar-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:190;
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  .mobile-sidebar-overlay.open{opacity:1;pointer-events:auto;}
+  .mobile-sidebar{
+    position:fixed;top:0;right:0;height:100vh;width:78%;max-width:320px;
+    background:var(--bg-alt);border-left:1px solid var(--border);
+    z-index:200;transform:translateX(100%);transition:transform .35s ease;
+    display:flex;flex-direction:column;padding:1.3rem 1.2rem 1.6rem;
+    box-shadow:-10px 0 40px var(--shadow);
+    overflow-y:auto;
+  }
+  .mobile-sidebar.open{transform:translateX(0);}
+  .mobile-sidebar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.8rem;}
+  .mobile-sidebar-head strong{font-family:var(--disp);font-size:1rem;display:block;}
+  .mobile-sidebar-head small{display:block;color:var(--muted);font-size:0.68rem;margin-top:0.1rem;}
+  .sidebar-close{
+    background:var(--surface);border:1px solid var(--border);width:34px;height:34px;
+    border-radius:8px;color:var(--text);font-size:1rem;flex-shrink:0;
+  }
+  .mobile-nav-links{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:1.4rem;}
+  .mobile-nav-links a{
+    padding:0.85rem 0.9rem;border-radius:10px;color:var(--text);
+    font-family:var(--disp);font-weight:600;font-size:0.95rem;
+    display:flex;align-items:center;gap:0.75rem;transition:background .2s;
+    border:1px solid transparent;
+  }
+  .mobile-nav-links a:hover, .mobile-nav-links a:active{background:var(--card-hover);border-color:var(--border);}
+  .mobile-sidebar-cta{width:100%;justify-content:center;margin-top:auto;}
+  .mobile-sidebar-foot{margin-top:1rem;font-family:var(--mono);font-size:0.68rem;color:#5a6b8c;text-align:center;}
+  body.no-scroll{overflow:hidden;}
+  @media(min-width:861px){
+    .mobile-sidebar, .mobile-sidebar-overlay{display:none;}
   }
 
   /* ---------- HERO ---------- */
@@ -521,9 +567,32 @@
         <span class="knob" id="themeKnob">🌙</span>
       </button>
       <a href="#materi" class="nav-cta">Mulai Belajar</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobileSidebar">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
+
+<div class="mobile-sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="mobile-sidebar" id="mobileSidebar" aria-hidden="true">
+  <div class="mobile-sidebar-head">
+    <div>
+      <strong>INF &amp; KKA</strong>
+      <small>SMP–SMA Attaufiq · Jambi</small>
+    </div>
+    <button class="sidebar-close" id="sidebarClose" aria-label="Tutup menu">✕</button>
+  </div>
+  <nav class="mobile-nav-links">
+    <a href="#info">📢 Info</a>
+    <a href="#materi">📚 Materi</a>
+    <a href="#tugas">📝 Tugas &amp; Kuis</a>
+    <a href="#nilai">📊 Cek Nilai</a>
+    <a href="#karya">🎨 Karya Siswa</a>
+  </nav>
+  <a href="#materi" class="btn-primary mobile-sidebar-cta">Mulai Belajar →</a>
+  <div class="mobile-sidebar-foot">Wahyu Dwi Prasetyo, S.Kom.Gr</div>
+</aside>
 
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
@@ -1029,6 +1098,39 @@ themeToggleBtn.addEventListener('click', async ()=>{
   try{ await window.storage.set('theme-preference', next); }catch(e){ /* penyimpanan tidak tersedia, lanjut tanpa disimpan */ }
 });
 initTheme();
+
+/* ===================== SIDEBAR NAVIGASI MOBILE ===================== */
+const navToggle = document.getElementById('navToggle');
+const mobileSidebar = document.getElementById('mobileSidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarClose = document.getElementById('sidebarClose');
+
+function openSidebar(){
+  mobileSidebar.classList.add('open');
+  sidebarOverlay.classList.add('open');
+  navToggle.classList.add('open');
+  navToggle.setAttribute('aria-expanded','true');
+  mobileSidebar.setAttribute('aria-hidden','false');
+  document.body.classList.add('no-scroll');
+}
+function closeSidebar(){
+  mobileSidebar.classList.remove('open');
+  sidebarOverlay.classList.remove('open');
+  navToggle.classList.remove('open');
+  navToggle.setAttribute('aria-expanded','false');
+  mobileSidebar.setAttribute('aria-hidden','true');
+  document.body.classList.remove('no-scroll');
+}
+if(navToggle){
+  navToggle.addEventListener('click', ()=>{
+    mobileSidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  sidebarClose.addEventListener('click', closeSidebar);
+  sidebarOverlay.addEventListener('click', closeSidebar);
+  document.querySelectorAll('.mobile-nav-links a, .mobile-sidebar-cta').forEach(a=>a.addEventListener('click', closeSidebar));
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeSidebar(); });
+  window.addEventListener('resize', ()=>{ if(window.innerWidth > 860) closeSidebar(); });
+}
 
 /* ===================== INISIALISASI ===================== */
 function renderAll(){
