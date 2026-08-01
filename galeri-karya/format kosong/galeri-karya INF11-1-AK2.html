@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Karya // Informatika &amp; KKA Attaufiq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #090d17;
+    --bg-alt: #0d1220;
+    --surface: #11182b;
+    --card: #141d34;
+    --card-hover: #1a2440;
+    --border: rgba(148,163,196,0.14);
+    --cyan: #26d9ee;
+    --green: #35e0a1;
+    --gold: #f2b544;
+    --text: #e9edf8;
+    --muted: #8b95b3;
+    --shadow: rgba(0,0,0,0.35);
+    --glass: rgba(9,13,23,0.6);
+    --mono: 'JetBrains Mono', monospace;
+    --disp: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  html[data-theme="light"]{
+    --bg: #f3f5fb;
+    --bg-alt: #ffffff;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --card-hover: #eef1fb;
+    --border: rgba(30,38,83,0.12);
+    --cyan: #1f8fc7;
+    --green: #1f6fa8;
+    --gold: #d99b0f;
+    --text: #1a2140;
+    --muted: #626c93;
+    --shadow: rgba(30,38,83,0.12);
+    --glass: rgba(255,255,255,0.7);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100vw;}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--body);
+    line-height:1.5;transition:background .35s ease, color .35s ease;
+    position:relative;width:100%;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:#26344f;border-radius:8px;}
+
+  .container{max-width:1180px;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem);}
+
+  /* ---------- TOP BAR ---------- */
+  #topbar{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:var(--glass);border-bottom:1px solid var(--border);
+  }
+  @media(max-width:640px){#topbar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg-alt);}}
+  .topbar-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    height:64px;
+  }
+  .back-link{
+    display:inline-flex;align-items:center;gap:0.5rem;
+    font-family:var(--mono);font-size:0.8rem;color:var(--muted);
+    transition:color .2s;
+  }
+  .back-link:hover{color:var(--cyan);}
+  .theme-toggle{
+    width:44px;height:26px;border-radius:20px;position:relative;flex-shrink:0;
+    background:var(--surface);border:1px solid var(--border);
+    padding:2px;transition:background .3s;
+  }
+  .theme-toggle .knob{
+    width:20px;height:20px;border-radius:50%;
+    background:linear-gradient(135deg,var(--cyan),var(--gold));
+    display:flex;align-items:center;justify-content:center;font-size:0.65rem;
+    transition:transform .3s ease;transform:translateX(0);
+  }
+  html[data-theme="light"] .theme-toggle .knob{transform:translateX(18px);}
+
+  /* ---------- HEADER TEMA ---------- */
+  header.page-head{padding:3rem 0 2rem;}
+  .eyebrow{
+    font-family:var(--mono);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--cyan);display:flex;align-items:center;gap:0.6em;
+  }
+  .eyebrow::before{content:"";width:18px;height:1px;background:var(--cyan);display:inline-block;}
+  h1.page-title{
+    font-family:var(--disp);font-weight:700;
+    font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-0.01em;
+    margin:0.5em 0 0.5em;
+  }
+  .page-desc{color:var(--muted);max-width:640px;font-size:1rem;}
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.4rem;
+    font-family:var(--mono);font-size:0.78rem;color:var(--muted);
+  }
+  .meta-row span b{color:var(--text);font-weight:600;}
+
+  /* ---------- GALERI ---------- */
+  main{padding-bottom:5rem;}
+  .gallery{
+    column-count:3;column-gap:1.1rem;margin-top:2rem;
+  }
+  @media(max-width:920px){.gallery{column-count:2;}}
+  @media(max-width:600px){.gallery{column-count:1;}}
+  .gallery-item{
+    break-inside:avoid;margin-bottom:1.1rem;border-radius:14px;overflow:hidden;
+    border:1px solid var(--border);background:var(--card);
+    transition:transform .25s, border-color .25s;cursor:pointer;
+  }
+  .gallery-item:hover{transform:translateY(-4px);border-color:rgba(38,217,238,0.35);}
+  .gallery-item img{width:100%;display:block;}
+  .gallery-item .caption{padding:0.85rem 1rem 1rem;}
+  .gallery-item .caption h4{font-family:var(--disp);font-size:0.92rem;margin-bottom:0.2rem;}
+  .gallery-item .caption p{color:var(--muted);font-size:0.78rem;}
+
+  /* ---------- EMPTY STATE (belum ada gambar) ---------- */
+  .empty-state{
+    margin-top:2.5rem;padding:3rem 1.5rem;text-align:center;
+    border:1.5px dashed var(--border);border-radius:18px;
+    color:var(--muted);
+  }
+  .empty-state .icon{font-size:2.4rem;margin-bottom:1rem;opacity:0.7;}
+  .empty-state h3{font-family:var(--disp);color:var(--text);font-size:1.15rem;margin-bottom:0.6rem;}
+  .empty-state p{max-width:480px;margin:0 auto 0.4rem;font-size:0.92rem;}
+  .empty-state code{
+    display:inline-block;margin-top:1rem;padding:0.2rem 0.5rem;border-radius:6px;
+    background:var(--surface);border:1px solid var(--border);
+    font-family:var(--mono);font-size:0.78rem;color:var(--cyan);
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+  #lightbox{
+    position:fixed;inset:0;background:rgba(4,6,12,0.92);
+    display:none;align-items:center;justify-content:center;
+    z-index:300;padding:2rem;flex-direction:column;
+  }
+  #lightbox.open{display:flex;}
+  #lightbox img{max-width:100%;max-height:78vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+  #lightbox .lb-caption{color:var(--muted);font-family:var(--mono);font-size:0.82rem;margin-top:1rem;text-align:center;max-width:640px;}
+  #lightbox .lb-close{
+    position:absolute;top:1.2rem;right:1.4rem;
+    width:40px;height:40px;border-radius:10px;
+    background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;
+  }
+  #lightbox .lb-nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:44px;height:44px;border-radius:50%;
+    background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;
+  }
+  #lightbox .lb-prev{left:1rem;}
+  #lightbox .lb-next{right:1rem;}
+
+  footer{
+    border-top:1px solid var(--border);padding:2rem 0;
+    text-align:center;font-family:var(--mono);font-size:0.75rem;color:#5a6b8c;
+  }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="container topbar-inner">
+    <a href="index.html" class="back-link">← Kembali ke Portal</a>
+    <button class="theme-toggle" id="themeToggle" title="Ganti mode siang/malam" aria-label="Ganti mode siang/malam">
+      <span class="knob" id="themeKnob">🌙</span>
+    </button>
+  </div>
+</div>
+
+<header class="page-head">
+  <div class="container">
+    <div class="eyebrow">Karya Siswa · Desain Grafis</div>
+    <!-- Ganti judul dan deskripsi di bawah ini sesuai tema tugas -->
+    <h1 class="page-title" id="pageTitle">Nama Tema Desain</h1>
+    <p class="page-desc" id="pageDesc">Kumpulan hasil desain grafis siswa untuk tema ini. Ganti judul, deskripsi, dan tambahkan gambar lewat daftar GALLERY_IMAGES di bagian script.</p>
+    <div class="meta-row">
+      <span>Kelas: <b id="metaKelas">-</b></span>
+      <span>Mapel: <b id="metaMapel">Informatika / KKA</b></span>
+      <span>Jumlah karya: <b id="metaCount">0</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="gallery" id="galleryGrid"></div>
+  <div class="empty-state" id="emptyState">
+    <div class="icon">🖼️</div>
+    <h3>Belum ada gambar di halaman ini</h3>
+    <p>Halaman ini memang sengaja dibuat kosong supaya siap diisi. Tambahkan gambar dengan mengedit daftar <code>GALLERY_IMAGES</code> di bagian bawah file HTML ini.</p>
+    <p>Tiap gambar bisa memakai file yang di-upload ke hosting (mis. folder <code>/images/</code>) atau link gambar dari internet.</p>
+  </div>
+</main>
+
+<footer>
+  Galeri Karya Siswa · Informatika &amp; KKA · SMP–SMA Attaufiq Jambi
+</footer>
+
+<div id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Tutup">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Sebelumnya">‹</button>
+  <img id="lbImage" src="" alt="">
+  <div class="lb-caption" id="lbCaption"></div>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Berikutnya">›</button>
+</div>
+
+<script>
+/* =====================================================================
+   CARA MENGISI HALAMAN INI
+   1. Ganti judul & deskripsi tema di elemen #pageTitle dan #pageDesc di atas
+      (atau langsung lewat variabel PAGE_INFO di bawah).
+   2. Tambahkan gambar dengan mengisi array GALLERY_IMAGES di bawah ini.
+      - src   : alamat/link gambar (bisa file yang diupload ke hosting, atau link dari internet)
+      - title : judul singkat karya
+      - by    : nama pembuat / kelompok
+      - kelas : kelas pembuatnya (opsional)
+   Contoh pengisian sudah dicontohkan dalam komentar di bawah array.
+   ===================================================================== */
+
+const PAGE_INFO = {
+  title: "Nama Tema Desain",           // contoh: "Poster Kampanye Anti Cyberbullying"
+  desc: "Kumpulan hasil desain grafis siswa untuk tema ini.",
+  kelas: "-",                          // contoh: "Kelas 8"
+  mapel: "Informatika / KKA",
+};
+
+const GALLERY_IMAGES = [
+  // Contoh cara mengisi (hapus tanda komentar // di awal baris untuk mengaktifkan):
+  // { src: "https://drive.google.com/uc?id=FILE_ID_ANDA", title: "Poster Hemat Listrik", by: "Kelompok 2", kelas: "Kelas 8" },
+  // { src: "images/desain-01.jpg", title: "Infografis Internet Sehat", by: "Aisyah R.", kelas: "Kelas 9" },
+];
+
+/* ===================== RENDER ===================== */
+document.getElementById('pageTitle').textContent = PAGE_INFO.title;
+document.getElementById('pageDesc').textContent = PAGE_INFO.desc;
+document.getElementById('metaKelas').textContent = PAGE_INFO.kelas;
+document.getElementById('metaMapel').textContent = PAGE_INFO.mapel;
+document.getElementById('metaCount').textContent = GALLERY_IMAGES.length;
+document.title = PAGE_INFO.title + " // Informatika & KKA Attaufiq";
+
+const galleryGrid = document.getElementById('galleryGrid');
+const emptyState = document.getElementById('emptyState');
+
+function escHtml(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderGallery(){
+  if(!GALLERY_IMAGES.length){
+    galleryGrid.style.display = 'none';
+    emptyState.style.display = 'block';
+    return;
+  }
+  galleryGrid.style.display = '';
+  emptyState.style.display = 'none';
+  galleryGrid.innerHTML = GALLERY_IMAGES.map((img, i) => `
+    <div class="gallery-item" data-index="${i}">
+      <img src="${escHtml(img.src)}" alt="${escHtml(img.title||'')}" loading="lazy">
+      <div class="caption">
+        <h4>${escHtml(img.title||'Tanpa judul')}</h4>
+        <p>${escHtml(img.by||'')}${img.kelas ? ' · ' + escHtml(img.kelas) : ''}</p>
+      </div>
+    </div>`).join('');
+  galleryGrid.querySelectorAll('.gallery-item').forEach(el=>{
+    el.addEventListener('click', ()=> openLightbox(parseInt(el.dataset.index)));
+  });
+}
+renderGallery();
+
+/* ===================== LIGHTBOX ===================== */
+const lightbox = document.getElementById('lightbox');
+const lbImage = document.getElementById('lbImage');
+const lbCaption = document.getElementById('lbCaption');
+let lbIndex = 0;
+
+function openLightbox(i){
+  if(!GALLERY_IMAGES.length) return;
+  lbIndex = i;
+  updateLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function updateLightbox(){
+  const img = GALLERY_IMAGES[lbIndex];
+  lbImage.src = img.src;
+  lbImage.alt = img.title || '';
+  lbCaption.textContent = [img.title, img.by, img.kelas].filter(Boolean).join(' · ');
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', ()=>{
+  lbIndex = (lbIndex - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+  updateLightbox();
+});
+document.getElementById('lbNext').addEventListener('click', ()=>{
+  lbIndex = (lbIndex + 1) % GALLERY_IMAGES.length;
+  updateLightbox();
+});
+lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e)=>{
+  if(!lightbox.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+  if(e.key === 'ArrowRight') document.getElementById('lbNext').click();
+});
+
+/* ===================== TEMA SIANG / MALAM ===================== */
+const themeToggle = document.getElementById('themeToggle');
+const themeKnob = document.getElementById('themeKnob');
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  themeKnob.textContent = theme === 'light' ? '☀️' : '🌙';
+}
+async function initTheme(){
+  let saved = null;
+  try{
+    const res = await window.storage.get('theme-preference');
+    saved = res ? res.value : null;
+  }catch(e){ saved = null; }
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+}
+themeToggle.addEventListener('click', async ()=>{
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+  try{ await window.storage.set('theme-preference', next); }catch(e){ /* penyimpanan tidak tersedia */ }
+});
+initTheme();
+</script>
+</body>
+</html>
