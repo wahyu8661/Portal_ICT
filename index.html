@@ -383,8 +383,8 @@
   .media-fallback{position:absolute;inset:0;align-items:center;justify-content:center;font-size:1.7rem;}
   .card-media{width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:0.9rem;display:block;background:var(--surface);}
   .link-hint{display:inline-flex;align-items:center;gap:0.3rem;font-family:var(--mono);font-size:0.68rem;color:var(--cyan);margin-top:0.7rem;}
-  a.materi-card, a.task-card, a.karya-item, a.info-card{display:block;}
-  a.materi-card:hover .link-hint, a.task-card:hover .link-hint{color:var(--green);}
+  a.materi-card, a.karya-item, a.info-card{display:block;}
+  a.materi-card:hover .link-hint{color:var(--green);}
   .materi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
   @media(max-width:920px){.materi-grid{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:600px){.materi-grid{grid-template-columns:1fr;}}
@@ -399,27 +399,18 @@
   .materi-tag{display:inline-flex;gap:0.4rem;font-family:var(--mono);font-size:0.68rem;color:var(--muted);align-items:center;}
   .materi-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);}
 
-  /* ---------- TUGAS & KUIS ---------- */
+  /* ---------- TUGAS & KUIS (per kelas, mirip Materi) ---------- */
   #tugas{background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-  .task-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.3rem;margin-top:2.4rem;}
-  @media(max-width:920px){.task-board{grid-template-columns:minmax(0,1fr);}}
-  .task-col{min-width:0;}
-  .task-col h5{font-family:var(--mono);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
-  .task-col h5 .count{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0.05rem 0.55rem;font-size:0.7rem;}
-  .task-card{
-    background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;margin-bottom:0.9rem;
-    cursor:pointer;transition:border-color .2s,transform .2s;
-  }
-  .task-card:hover{border-color:var(--cyan);transform:translateX(3px);}
-  .task-card.done{opacity:0.55;}
-  .task-card.done h4{text-decoration:line-through;}
-  .task-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;}
-  .task-card h4{font-family:var(--disp);font-size:0.95rem;}
+  .tugas-top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:0.6rem;margin-bottom:0.6rem;}
+  .tugas-pills{display:flex;gap:0.4rem;flex-shrink:0;}
   .pill{font-family:var(--mono);font-size:0.62rem;padding:0.15rem 0.5rem;border-radius:6px;white-space:nowrap;}
   .pill.tugas{background:rgba(38,217,238,0.13);color:var(--cyan);}
   .pill.kuis{background:rgba(242,181,68,0.15);color:var(--gold);}
-  .task-card p{color:var(--muted);font-size:0.8rem;margin-bottom:0.6rem;}
-  .task-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:0.7rem;color:#5a6b8c;}
+  .pill.status-todo{background:rgba(38,217,238,0.13);color:var(--cyan);}
+  .pill.status-review{background:rgba(242,181,68,0.15);color:var(--gold);}
+  .pill.status-done{background:rgba(53,224,161,0.15);color:var(--green);}
+  .materi-card.tugas-done{opacity:0.6;}
+  .materi-card.tugas-done h4{text-decoration:line-through;}
 
   /* ---------- CEK NILAI ---------- */
   .nilai-wrap{
@@ -502,7 +493,7 @@
   .reveal.in{opacity:1;transform:translateY(0);}
 
   /* ---------- THEME TRANSITION (halus di semua permukaan) ---------- */
-  .info-card,.materi-card,.task-card,.karya-item,.nilai-form,.nilai-result,
+  .info-card,.materi-card,.karya-item,.nilai-form,.nilai-result,
   footer,.tab-btn,.subject-switch,.nilai-form input,.nilai-form select,#navbar{
     transition:background .3s ease,border-color .3s ease,color .3s ease,box-shadow .3s ease;
   }
@@ -520,7 +511,7 @@
   @media (max-width:640px){
     .swipe-hint{display:flex;}
 
-    .info-grid, .materi-grid, #col-todo, #col-review, #col-done, .karya-grid{
+    .info-grid, .materi-grid, .karya-grid{
       display:flex !important;
       flex-wrap:nowrap !important;
       overflow-x:auto;
@@ -533,10 +524,9 @@
       scrollbar-width:thin;
     }
     .info-grid::-webkit-scrollbar, .materi-grid::-webkit-scrollbar,
-    #col-todo::-webkit-scrollbar, #col-review::-webkit-scrollbar, #col-done::-webkit-scrollbar,
     .karya-grid::-webkit-scrollbar{height:5px;}
 
-    .info-card, .materi-card, .task-card, .karya-item{
+    .info-card, .materi-card, .karya-item{
       flex:0 0 78%;
       scroll-snap-align:start;
     }
@@ -552,8 +542,6 @@
     #materi .hscroll-wrap::after{
       background:linear-gradient(90deg, transparent, var(--bg) 88%);
     }
-
-    .task-board{gap:1.8rem;}
   }
   @media (prefers-reduced-motion:reduce){
     .swipe-hint .arrow{animation:none;}
@@ -677,24 +665,12 @@
 <section id="tugas">
   <div class="container reveal">
     <div class="eyebrow">Ruang Kerja</div>
-    <h2 class="section-title">Tugas &amp; kuis berjalan</h2>
-    <p class="section-sub">Pantau apa yang perlu dikumpulkan minggu ini, dipisah per mapel supaya tidak tertukar.</p>
+    <h2 class="section-title">Tugas &amp; kuis per kelas</h2>
+    <p class="section-sub">Pilih mapel dan kelas untuk melihat tugas &amp; kuis yang berlaku, lengkap dengan status pengerjaannya.</p>
     <div class="subject-switch" id="tugasSubjectSwitch"></div>
-    <div class="swipe-hint"><span>Geser tiap kolom untuk lihat lainnya</span><span class="arrow">→</span></div>
-    <div class="task-board">
-      <div class="task-col">
-        <h5>Belum dikerjakan <span class="count" id="cnt-todo">0</span></h5>
-        <div class="hscroll-wrap"><div id="col-todo"></div></div>
-      </div>
-      <div class="task-col">
-        <h5>Menunggu penilaian <span class="count" id="cnt-review">0</span></h5>
-        <div class="hscroll-wrap"><div id="col-review"></div></div>
-      </div>
-      <div class="task-col">
-        <h5>Selesai <span class="count" id="cnt-done">0</span></h5>
-        <div class="hscroll-wrap"><div id="col-done"></div></div>
-      </div>
-    </div>
+    <div class="tabs" id="tugasTabs"></div>
+    <div class="swipe-hint"><span>Geser untuk lihat lainnya</span><span class="arrow">→</span></div>
+    <div class="hscroll-wrap"><div class="materi-grid" id="tugasGrid"></div></div>
   </div>
 </section>
 
@@ -893,6 +869,7 @@ let currentMapelMateri = "Informatika";
 let currentMapelTugas = "Informatika";
 let currentMapelKarya = "Informatika";
 let currentKelasMateri = "Kelas 10";
+let currentKelasTugas = "Kelas 10";
 
 /* ===================== SUBJECT SWITCHERS ===================== */
 function buildSubjectSwitch(containerId, onChange, initial){
@@ -956,35 +933,55 @@ function renderMateriGrid(){
   }).join('');
 }
 
-/* ===================== TUGAS BOARD ===================== */
+/* ===================== TUGAS & KUIS (per kelas) ===================== */
 function statusKey(s){
   s = (s||'').toLowerCase();
   if(s.startsWith('menunggu')) return 'review';
   if(s.startsWith('selesai')) return 'done';
   return 'todo';
 }
-function renderTugas(){
-  const cols = {todo:[], review:[], done:[]};
-  TUGAS_ALL.filter(t=>t.Mapel===currentMapelTugas).forEach(t=>cols[statusKey(t.Status)].push(t));
-  const tmpl = (t) => {
-    const img = t.Image ? `<img class="card-media" style="height:110px;" src="${escAttr(t.Image)}" alt="" loading="lazy" onerror="this.style.display='none';">` : '';
+const STATUS_LABEL = {todo:'Belum dikerjakan', review:'Menunggu penilaian', done:'Selesai'};
+const tugasTabsEl = document.getElementById('tugasTabs');
+const tugasGridEl = document.getElementById('tugasGrid');
+
+function renderTugasTabs(){
+  tugasTabsEl.innerHTML = "";
+  KELAS_LIST.forEach(k=>{
+    const b = document.createElement('button');
+    b.className = 'tab-btn' + (k===currentKelasTugas?' active':'');
+    b.textContent = k;
+    b.onclick = ()=>{
+      currentKelasTugas = k;
+      tugasTabsEl.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      renderTugasGrid();
+    };
+    tugasTabsEl.appendChild(b);
+  });
+}
+function renderTugasGrid(){
+  const items = TUGAS_ALL.filter(t=>t.Mapel===currentMapelTugas && t.Kelas===currentKelasTugas);
+  if(!items.length){
+    tugasGridEl.innerHTML = `<p style="color:var(--muted);grid-column:1/-1;">Belum ada tugas/kuis untuk ${currentMapelTugas} · ${currentKelasTugas}.</p>`;
+    return;
+  }
+  tugasGridEl.innerHTML = items.map(t=>{
+    const sKey = statusKey(t.Status);
+    const img = t.Image ? `<img class="card-media" src="${escAttr(t.Image)}" alt="" loading="lazy" onerror="this.style.display='none';">` : '';
     const inner = `
       ${img}
-      <div class="task-top">
-        <h4>${escHtml(t.Judul)}</h4>
-        <span class="pill ${t.Jenis==='Kuis'?'kuis':'tugas'}">${escHtml(t.Jenis)}</span>
+      <div class="tugas-top-row">
+        <div class="materi-num">${escHtml(t.Kelas)} · ${escHtml(t['Info Waktu']||'')}</div>
+        <div class="tugas-pills">
+          <span class="pill ${t.Jenis==='Kuis'?'kuis':'tugas'}">${escHtml(t.Jenis)}</span>
+          <span class="pill status-${sKey}">${STATUS_LABEL[sKey]}</span>
+        </div>
       </div>
+      <h4>${escHtml(t.Judul)}</h4>
       <p>${escHtml(t.Deskripsi)}</p>
-      <div class="task-meta"><span>${escHtml(t.Kelas)}</span><span>${escHtml(t['Info Waktu']||'')}</span></div>
       ${linkHint(t.Link)}`;
-    return cardTag(t.Link, `task-card ${statusKey(t.Status)==='done'?'done':''}`, inner);
-  };
-  document.getElementById('col-todo').innerHTML = cols.todo.map(tmpl).join('') || '<p style="color:var(--muted);font-size:0.85rem;">Tidak ada tugas.</p>';
-  document.getElementById('col-review').innerHTML = cols.review.map(tmpl).join('') || '<p style="color:var(--muted);font-size:0.85rem;">Tidak ada.</p>';
-  document.getElementById('col-done').innerHTML = cols.done.map(tmpl).join('') || '<p style="color:var(--muted);font-size:0.85rem;">Belum ada.</p>';
-  document.getElementById('cnt-todo').textContent = cols.todo.length;
-  document.getElementById('cnt-review').textContent = cols.review.length;
-  document.getElementById('cnt-done').textContent = cols.done.length;
+    return cardTag(t.Link, `materi-card${sKey==='done'?' tugas-done':''}`, inner);
+  }).join('');
 }
 
 /* ===================== CEK NILAI ===================== */
@@ -1158,14 +1155,15 @@ if(navToggle){
 function renderAll(){
   renderMateriTabs();
   renderMateriGrid();
-  renderTugas();
+  renderTugasTabs();
+  renderTugasGrid();
   renderKaryaFilters();
   renderKaryaGrid();
   renderInfo();
 }
 
 buildSubjectSwitch('materiSubjectSwitch', (v)=>{ currentMapelMateri=v; renderMateriGrid(); }, currentMapelMateri);
-buildSubjectSwitch('tugasSubjectSwitch', (v)=>{ currentMapelTugas=v; renderTugas(); }, currentMapelTugas);
+buildSubjectSwitch('tugasSubjectSwitch', (v)=>{ currentMapelTugas=v; renderTugasGrid(); }, currentMapelTugas);
 buildSubjectSwitch('karyaSubjectSwitch', (v)=>{ currentMapelKarya=v; renderKaryaFilters(); renderKaryaGrid(); }, currentMapelKarya);
 
 renderAll();
