@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Karya // Informatika &amp; KKA Attaufiq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #090d17;
+    --bg-alt: #0d1220;
+    --surface: #11182b;
+    --card: #141d34;
+    --border: rgba(148,163,196,0.14);
+    --cyan: #26d9ee;
+    --green: #35e0a1;
+    --gold: #f2b544;
+    --text: #e9edf8;
+    --muted: #8b95b3;
+    --glass: rgba(9,13,23,0.6);
+    --mono: 'JetBrains Mono', monospace;
+    --disp: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  html[data-theme="light"]{
+    --bg: #f3f5fb;
+    --bg-alt: #ffffff;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --border: rgba(30,38,83,0.12);
+    --cyan: #1f8fc7;
+    --green: #1f6fa8;
+    --gold: #d99b0f;
+    --text: #1a2140;
+    --muted: #626c93;
+    --glass: rgba(255,255,255,0.7);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100vw;}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--body);
+    line-height:1.5;transition:background .35s ease, color .35s ease;
+    position:relative;width:100%;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:#26344f;border-radius:8px;}
+
+  .container{max-width:1000px;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem);}
+
+  /* ---------- TOP BAR ---------- */
+  #topbar{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:var(--glass);border-bottom:1px solid var(--border);
+  }
+  @media(max-width:640px){#topbar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg-alt);}}
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:64px;}
+  .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.8rem;color:var(--muted);transition:color .2s;}
+  .back-link:hover{color:var(--cyan);}
+  .theme-toggle{
+    width:44px;height:26px;border-radius:20px;position:relative;flex-shrink:0;
+    background:var(--surface);border:1px solid var(--border);padding:2px;transition:background .3s;
+  }
+  .theme-toggle .knob{
+    width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--gold));
+    display:flex;align-items:center;justify-content:center;font-size:0.65rem;
+    transition:transform .3s ease;transform:translateX(0);
+  }
+  html[data-theme="light"] .theme-toggle .knob{transform:translateX(18px);}
+
+  /* ---------- HEADER ---------- */
+  header.page-head{padding:3rem 0 1.5rem;}
+  .eyebrow{
+    font-family:var(--mono);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--cyan);display:flex;align-items:center;gap:0.6em;
+  }
+  .eyebrow::before{content:"";width:18px;height:1px;background:var(--cyan);display:inline-block;}
+  h1.page-title{
+    font-family:var(--disp);font-weight:700;font-size:clamp(1.8rem,4vw,2.4rem);
+    letter-spacing:-0.01em;margin:0.5em 0 0.5em;
+  }
+  .page-desc{color:var(--muted);font-size:1rem;max-width:680px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.2rem;font-family:var(--mono);font-size:0.78rem;color:var(--muted);}
+  .meta-row span b{color:var(--text);font-weight:600;}
+
+  /* ---------- VIDEO ---------- */
+  main{padding:1.5rem 0 5rem;}
+  .video-row{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;}
+  @media(max-width:760px){.video-row{grid-template-columns:1fr;}}
+  .video-slot{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.1rem;}
+  .video-label{
+    display:flex;align-items:center;gap:0.45rem;
+    font-family:var(--disp);font-weight:600;font-size:0.95rem;margin-bottom:0.8rem;
+  }
+  .video-label.proses{color:var(--gold);}
+  .video-label.hasil{color:var(--green);}
+  .video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;}
+  .video-frame iframe, .video-frame video{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .video-caption{color:var(--muted);font-size:0.8rem;margin-top:0.7rem;}
+  .video-slot.empty .video-frame{
+    display:flex;align-items:center;justify-content:center;
+    color:var(--muted);font-family:var(--mono);font-size:0.76rem;text-align:center;padding:1rem;
+  }
+
+  footer{border-top:1px solid var(--border);padding:2rem 0;margin-top:2rem;text-align:center;font-family:var(--mono);font-size:0.75rem;color:#5a6b8c;}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="container topbar-inner">
+    <a href="index.html" class="back-link">← Kembali ke Portal</a>
+    <button class="theme-toggle" id="themeToggle" title="Ganti mode siang/malam" aria-label="Ganti mode siang/malam">
+      <span class="knob" id="themeKnob">🌙</span>
+    </button>
+  </div>
+</div>
+
+<header class="page-head">
+  <div class="container">
+    <div class="eyebrow">Karya Siswa · Video</div>
+    <!-- Ganti judul, deskripsi, dan info di bawah sesuai tugasnya -->
+    <h1 class="page-title" id="pageTitle">Judul Video Iklan</h1>
+    <p class="page-desc" id="pageDesc">Deskripsi singkat tentang video iklan ini — tema, tujuan, atau proses pembuatannya.</p>
+    <div class="meta-row">
+      <span>Pembuat: <b id="metaBy">-</b></span>
+      <span>Kelas: <b id="metaKelas">-</b></span>
+      <span>Mapel: <b id="metaMapel">Informatika / KKA</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="video-row" id="videoRow"></div>
+</main>
+
+<footer>Video Karya Siswa · Informatika &amp; KKA · SMP–SMA Attaufiq Jambi</footer>
+
+<script>
+/* =====================================================================
+   CARA MENGISI HALAMAN INI — tinggal ubah bagian di bawah ini saja.
+
+   1. Ganti INFO judul/deskripsi/pembuat/kelas.
+   2. Isi videoProses & videoHasil dengan salah satu dari:
+      a) Link YouTube / Google Drive (share "siapa saja yang punya link"), atau
+      b) Nama file video yang sudah Bapak upload ke folder hosting yang sama,
+         misalnya "videos/iklan-hemat-air-proses.mp4"
+   Kosongkan ("") kalau videonya belum ada — halaman akan otomatis menampilkan
+   keterangan "video belum ditambahkan" di slot itu.
+   ===================================================================== */
+
+const INFO = {
+  title: "Membuat video iklan",
+  desc: "dalam kegiatan ini ananda melakukan praktik langsung dalam penerapan videografi dari perencanaan hinggal proses pembuatan video iklan untuk promosi produk",
+  by: "-",              // contoh: "Kelompok 3"
+  kelas: "VIII Ikhwan",           // contoh: "Kelas 9"
+  mapel: "Informatika",
+  videoProses: "https://res.cloudinary.com/dsucuk7do/video/upload/v1785714275/before_arftts.mp4",      // contoh: "https://youtu.be/xxxxxxxxxxx"  atau  "videos/proses.mp4"
+  videoHasil: "https://res.cloudinary.com/dsucuk7do/video/upload/v1785714270/after_wq3st1.mp4",       // contoh: "https://youtu.be/yyyyyyyyyyy"  atau  "videos/hasil.mp4"
+};
+
+/* ===================== RENDER (tidak perlu diubah) ===================== */
+function escHtml(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return (s||'').toString().replace(/"/g,'&quot;'); }
+
+document.getElementById('pageTitle').textContent = INFO.title;
+document.getElementById('pageDesc').textContent = INFO.desc;
+document.getElementById('metaBy').textContent = INFO.by;
+document.getElementById('metaKelas').textContent = INFO.kelas;
+document.getElementById('metaMapel').textContent = INFO.mapel;
+document.title = INFO.title + " // Informatika & KKA Attaufiq";
+
+function toEmbed(url){
+  if(!url) return null;
+  url = url.trim();
+  let m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{6,})/);
+  if(m) return {type:'iframe', src:`https://www.youtube.com/embed/${m[1]}`};
+  m = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return {type:'iframe', src:`https://drive.google.com/file/d/${m[1]}/preview`};
+  if(/\.(mp4|webm|ogg)(\?.*)?$/i.test(url)) return {type:'video', src:url};
+  return {type:'iframe', src:url};
+}
+function videoSlot(url, label, cls){
+  if(!url){
+    return `<div class="video-slot empty">
+      <div class="video-label ${cls}">${label}</div>
+      <div class="video-frame">Video belum ditambahkan</div>
+    </div>`;
+  }
+  const e = toEmbed(url);
+  const media = e.type === 'video'
+    ? `<video controls preload="metadata" src="${escAttr(e.src)}"></video>`
+    : `<iframe src="${escAttr(e.src)}" title="${escAttr(label)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  return `<div class="video-slot">
+      <div class="video-label ${cls}">${label}</div>
+      <div class="video-frame">${media}</div>
+    </div>`;
+}
+
+document.getElementById('videoRow').innerHTML =
+  videoSlot(INFO.videoProses, '🎬 Video Proses', 'proses') +
+  videoSlot(INFO.videoHasil, '✅ Video Hasil Jadi', 'hasil');
+
+/* ===================== TEMA SIANG / MALAM ===================== */
+const themeToggle = document.getElementById('themeToggle');
+const themeKnob = document.getElementById('themeKnob');
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  themeKnob.textContent = theme === 'light' ? '☀️' : '🌙';
+}
+async function initTheme(){
+  let saved = null;
+  try{
+    const res = await window.storage.get('theme-preference');
+    saved = res ? res.value : null;
+  }catch(e){ saved = null; }
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+}
+themeToggle.addEventListener('click', async ()=>{
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+  try{ await window.storage.set('theme-preference', next); }catch(e){ /* penyimpanan tidak tersedia */ }
+});
+initTheme();
+</script>
+</body>
+</html>
