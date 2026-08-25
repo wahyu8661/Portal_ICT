@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karya Aplikasi Android // Informatika &amp; KKA Attaufiq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #090d17;
+    --bg-alt: #0d1220;
+    --surface: #11182b;
+    --card: #141d34;
+    --border: rgba(148,163,196,0.14);
+    --cyan: #26d9ee;
+    --green: #35e0a1;
+    --gold: #f2b544;
+    --text: #e9edf8;
+    --muted: #8b95b3;
+    --glass: rgba(9,13,23,0.6);
+    --mono: 'JetBrains Mono', monospace;
+    --disp: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  html[data-theme="light"]{
+    --bg: #f3f5fb;
+    --bg-alt: #ffffff;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --border: rgba(30,38,83,0.12);
+    --cyan: #1f8fc7;
+    --green: #1f6fa8;
+    --gold: #d99b0f;
+    --text: #1a2140;
+    --muted: #626c93;
+    --glass: rgba(255,255,255,0.7);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100vw;}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--body);
+    line-height:1.5;transition:background .35s ease, color .35s ease;
+    position:relative;width:100%;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:#26344f;border-radius:8px;}
+
+  .container{max-width:1080px;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem);}
+
+  /* ---------- TOP BAR ---------- */
+  #topbar{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    background:var(--glass);border-bottom:1px solid var(--border);
+  }
+  @media(max-width:640px){#topbar{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg-alt);}}
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:64px;}
+  .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.8rem;color:var(--muted);transition:color .2s;}
+  .back-link:hover{color:var(--cyan);}
+  .theme-toggle{
+    width:44px;height:26px;border-radius:20px;position:relative;flex-shrink:0;
+    background:var(--surface);border:1px solid var(--border);padding:2px;transition:background .3s;
+  }
+  .theme-toggle .knob{
+    width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--gold));
+    display:flex;align-items:center;justify-content:center;font-size:0.65rem;
+    transition:transform .3s ease;transform:translateX(0);
+  }
+  html[data-theme="light"] .theme-toggle .knob{transform:translateX(18px);}
+
+  /* ---------- HEADER APLIKASI ---------- */
+  header.app-head{padding:3rem 0 2.5rem;}
+  .app-head-row{display:flex;gap:1.4rem;align-items:flex-start;flex-wrap:wrap;}
+  .app-icon{
+    width:88px;height:88px;border-radius:22px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--cyan),var(--green));
+    display:flex;align-items:center;justify-content:center;
+    font-size:2.4rem;overflow:hidden;
+    box-shadow:0 12px 30px rgba(38,217,238,0.22);
+  }
+  .app-icon img{width:100%;height:100%;object-fit:cover;}
+  .app-head-text{flex:1;min-width:220px;}
+  .eyebrow{
+    font-family:var(--mono);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--cyan);display:flex;align-items:center;gap:0.6em;margin-bottom:0.6rem;
+  }
+  .eyebrow::before{content:"";width:18px;height:1px;background:var(--cyan);display:inline-block;}
+  h1.app-title{font-family:var(--disp);font-weight:700;font-size:clamp(1.7rem,3.6vw,2.3rem);letter-spacing:-0.01em;}
+  .app-tagline{color:var(--muted);font-size:0.98rem;margin-top:0.4rem;max-width:600px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.1rem;font-family:var(--mono);font-size:0.76rem;color:var(--muted);}
+  .meta-row span b{color:var(--text);font-weight:600;}
+
+  .app-desc{color:var(--muted);font-size:0.95rem;max-width:720px;margin-top:1.5rem;}
+
+  /* ---------- DOWNLOAD CTA ---------- */
+  .download-box{
+    margin-top:1.8rem;padding:1.3rem 1.5rem;border-radius:16px;
+    background:var(--card);border:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+  }
+  .download-box .dl-info h4{font-family:var(--disp);font-size:0.98rem;margin-bottom:0.25rem;}
+  .download-box .dl-info p{color:var(--muted);font-size:0.8rem;}
+  .btn-download{
+    padding:0.85rem 1.5rem;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(100deg,var(--cyan),var(--green));
+    color:#04121a;font-weight:700;font-size:0.92rem;
+    display:inline-flex;align-items:center;gap:0.55em;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .btn-download:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(38,217,238,0.28);}
+  .btn-download.disabled{
+    background:var(--surface);color:var(--muted);pointer-events:none;
+    border:1px dashed var(--border);
+  }
+  .install-tip{
+    margin-top:0.9rem;font-size:0.78rem;color:var(--muted);
+    display:flex;gap:0.5rem;align-items:flex-start;
+  }
+  .install-tip .ic{flex-shrink:0;}
+
+  /* ---------- FITUR ---------- */
+  section{padding:2.2rem 0;}
+  .section-title{font-family:var(--disp);font-weight:600;font-size:1.3rem;margin-bottom:1.2rem;}
+  .feature-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;}
+  @media(max-width:600px){.feature-list{grid-template-columns:1fr;}}
+  .feature-item{
+    display:flex;gap:0.7rem;align-items:flex-start;
+    background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.9rem 1rem;
+  }
+  .feature-item .check{
+    width:22px;height:22px;border-radius:50%;flex-shrink:0;
+    background:rgba(53,224,161,0.15);color:var(--green);
+    display:flex;align-items:center;justify-content:center;font-size:0.72rem;margin-top:0.1rem;
+  }
+  .feature-item p{font-size:0.88rem;color:var(--text);}
+
+  /* ---------- SCREENSHOT ---------- */
+  #screenshots{background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .shot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;}
+  @media(max-width:820px){.shot-grid{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:600px){.shot-grid{grid-template-columns:repeat(2,1fr);}}
+  .shot-item{cursor:pointer;}
+  .phone-frame{
+    position:relative;width:100%;aspect-ratio:9/19.5;
+    background:#000;border-radius:22px;padding:8px;
+    border:1px solid var(--border);
+    box-shadow:0 14px 34px var(--shadow, rgba(0,0,0,0.3));
+    transition:transform .25s;
+  }
+  .shot-item:hover .phone-frame{transform:translateY(-4px);}
+  .phone-frame .notch{
+    position:absolute;top:8px;left:50%;transform:translateX(-50%);
+    width:38%;height:16px;background:#000;border-radius:0 0 10px 10px;z-index:2;
+  }
+  .phone-frame .screen{
+    width:100%;height:100%;border-radius:16px;overflow:hidden;background:var(--surface);
+    position:relative;
+  }
+  .phone-frame .screen img{width:100%;height:100%;object-fit:cover;display:block;}
+  .phone-frame .screen .placeholder{
+    width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    color:var(--muted);font-family:var(--mono);font-size:0.65rem;text-align:center;padding:0.6rem;
+  }
+  .shot-caption{color:var(--muted);font-size:0.76rem;text-align:center;margin-top:0.6rem;}
+
+  .empty-shots{
+    padding:2.4rem 1.5rem;text-align:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);
+  }
+  .empty-shots code{
+    display:inline-block;margin-top:0.5rem;padding:0.2rem 0.5rem;border-radius:6px;
+    background:var(--surface);border:1px solid var(--border);font-family:var(--mono);font-size:0.74rem;color:var(--cyan);
+  }
+
+  /* ---------- TOOLS ---------- */
+  .tool-badges{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;}
+  .tool-badge{
+    font-family:var(--mono);font-size:0.72rem;padding:0.3rem 0.7rem;border-radius:20px;
+    background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+  #lightbox{
+    position:fixed;inset:0;background:rgba(4,6,12,0.92);
+    display:none;align-items:center;justify-content:center;
+    z-index:300;padding:2rem;flex-direction:column;
+  }
+  #lightbox.open{display:flex;}
+  #lightbox img{max-width:100%;max-height:80vh;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+  #lightbox .lb-caption{color:var(--muted);font-family:var(--mono);font-size:0.82rem;margin-top:1rem;text-align:center;}
+  #lightbox .lb-close{
+    position:absolute;top:1.2rem;right:1.4rem;width:40px;height:40px;border-radius:10px;
+    background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.1rem;
+  }
+  #lightbox .lb-nav{
+    position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+    background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:1.2rem;
+  }
+  #lightbox .lb-prev{left:1rem;}
+  #lightbox .lb-next{right:1rem;}
+
+  footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;font-family:var(--mono);font-size:0.75rem;color:#5a6b8c;}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="container topbar-inner">
+    <a href="index.html" class="back-link">← Kembali ke Portal</a>
+    <button class="theme-toggle" id="themeToggle" title="Ganti mode siang/malam" aria-label="Ganti mode siang/malam">
+      <span class="knob" id="themeKnob">🌙</span>
+    </button>
+  </div>
+</div>
+
+<header class="app-head">
+  <div class="container">
+    <div class="eyebrow">Karya Siswa · Aplikasi Android</div>
+    <div class="app-head-row">
+      <div class="app-icon" id="appIcon">📱</div>
+      <div class="app-head-text">
+        <h1 class="app-title" id="appTitle">Nama Aplikasi</h1>
+        <p class="app-tagline" id="appTagline">Tagline singkat aplikasi dalam satu kalimat.</p>
+        <div class="meta-row">
+          <span>Pembuat: <b id="metaBy">-</b></span>
+          <span>Kelas: <b id="metaKelas">-</b></span>
+          <span>Mapel: <b id="metaMapel">Informatika / KKA</b></span>
+        </div>
+      </div>
+    </div>
+    <p class="app-desc" id="appDesc">Gambaran aplikasi: masalah apa yang diselesaikan, siapa target penggunanya, dan bagaimana cara kerjanya secara umum.</p>
+
+    <div class="download-box">
+      <div class="dl-info">
+        <h4>Unduh &amp; coba aplikasinya</h4>
+        <p id="dlHint">File APK untuk Android, ukuran menyesuaikan.</p>
+      </div>
+      <a href="#" id="btnDownload" class="btn-download">⬇ Unduh APK</a>
+    </div>
+    <div class="install-tip">
+      <span class="ic">💡</span>
+      <span>Karena bukan dari Play Store, saat instal Android mungkin minta izin "Sumber tidak dikenal / Install dari sumber lain" — aktifkan sementara untuk memasang aplikasi ini.</span>
+    </div>
+  </div>
+</header>
+
+<section id="fitur">
+  <div class="container">
+    <h2 class="section-title">Fitur Utama</h2>
+    <div class="feature-list" id="featureList"></div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="container">
+    <h2 class="section-title">Tampilan Aplikasi</h2>
+    <div class="shot-grid" id="shotGrid"></div>
+    <div class="empty-shots" id="emptyShots" style="display:none;">
+      Belum ada screenshot. Tambahkan lewat daftar <code>SCREENSHOTS</code> di bagian script.
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="container">
+    <h2 class="section-title">Dibuat dengan</h2>
+    <div class="tool-badges" id="toolBadges"></div>
+  </div>
+</section>
+
+<footer>Karya Siswa · Informatika &amp; KKA · SMP–SMA Attaufiq Jambi</footer>
+
+<div id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Tutup">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Sebelumnya">‹</button>
+  <img id="lbImage" src="" alt="">
+  <div class="lb-caption" id="lbCaption"></div>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Berikutnya">›</button>
+</div>
+
+<script>
+/* =====================================================================
+   CARA MENGISI HALAMAN INI — cukup ubah bagian APP_INFO, FEATURES,
+   SCREENSHOTS, dan TOOLS di bawah ini.
+   ===================================================================== */
+
+const APP_INFO = {
+  icon: "",                     // opsional: link/nama file ikon aplikasi (kosongkan utk ikon default 📱)
+  title: "Nama Aplikasi",
+  tagline: "Tagline singkat aplikasi dalam satu kalimat.",
+  by: "-",                      // contoh: "Kelompok 2" atau nama siswa
+  kelas: "-",                   // contoh: "Kelas 11"
+  mapel: "Informatika / KKA",
+  desc: "Gambaran aplikasi: masalah apa yang diselesaikan, siapa target penggunanya, dan bagaimana cara kerjanya secara umum.",
+  downloadUrl: "",              // link unduh APK (Google Drive share link, atau file .apk di hosting)
+  downloadHint: "File APK untuk Android, ukuran menyesuaikan.",
+};
+
+const FEATURES = [
+  // Isi tiap fitur sebagai satu baris teks singkat, contoh:
+  // "Login dan daftar akun siswa",
+  // "Pengingat jadwal tugas otomatis",
+];
+
+const SCREENSHOTS = [
+  // Isi src dengan link gambar atau nama file yang diupload ke hosting, contoh:
+  // { src: "images/app-01.jpg", caption: "Halaman Beranda" },
+  // { src: "images/app-02.jpg", caption: "Halaman Profil" },
+];
+
+const TOOLS = [
+  // Contoh: "Kodular", "MIT App Inventor", "Android Studio", "Firebase"
+];
+
+/* ===================== RENDER (tidak perlu diubah) ===================== */
+function escHtml(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return (s||'').toString().replace(/"/g,'&quot;'); }
+
+document.getElementById('appTitle').textContent = APP_INFO.title;
+document.getElementById('appTagline').textContent = APP_INFO.tagline;
+document.getElementById('appDesc').textContent = APP_INFO.desc;
+document.getElementById('metaBy').textContent = APP_INFO.by;
+document.getElementById('metaKelas').textContent = APP_INFO.kelas;
+document.getElementById('metaMapel').textContent = APP_INFO.mapel;
+document.getElementById('dlHint').textContent = APP_INFO.downloadHint;
+document.title = APP_INFO.title + " // Informatika & KKA Attaufiq";
+
+if(APP_INFO.icon){
+  document.getElementById('appIcon').innerHTML = `<img src="${escAttr(APP_INFO.icon)}" alt="">`;
+}
+
+const btnDl = document.getElementById('btnDownload');
+if(APP_INFO.downloadUrl){
+  btnDl.href = APP_INFO.downloadUrl;
+  btnDl.target = "_blank";
+  btnDl.rel = "noopener noreferrer";
+} else {
+  btnDl.href = "#";
+  btnDl.textContent = "Link unduh belum tersedia";
+  btnDl.classList.add('disabled');
+}
+
+const featureList = document.getElementById('featureList');
+if(FEATURES.length){
+  featureList.innerHTML = FEATURES.map(f => `
+    <div class="feature-item">
+      <span class="check">✓</span>
+      <p>${escHtml(f)}</p>
+    </div>`).join('');
+} else {
+  featureList.innerHTML = `<p style="color:var(--muted);font-size:0.88rem;">Daftar fitur belum ditambahkan.</p>`;
+}
+
+const shotGrid = document.getElementById('shotGrid');
+const emptyShots = document.getElementById('emptyShots');
+if(SCREENSHOTS.length){
+  shotGrid.innerHTML = SCREENSHOTS.map((s,i) => `
+    <div class="shot-item" data-index="${i}">
+      <div class="phone-frame">
+        <div class="notch"></div>
+        <div class="screen">
+          <img src="${escAttr(s.src)}" alt="${escAttr(s.caption||'')}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=&quot;placeholder&quot;>Gambar tidak dapat dimuat</div>'">
+        </div>
+      </div>
+      ${s.caption ? `<div class="shot-caption">${escHtml(s.caption)}</div>` : ''}
+    </div>`).join('');
+  shotGrid.querySelectorAll('.shot-item').forEach(el=>{
+    el.addEventListener('click', ()=> openLightbox(parseInt(el.dataset.index)));
+  });
+} else {
+  emptyShots.style.display = 'block';
+}
+
+const toolBadges = document.getElementById('toolBadges');
+document.getElementById('tools').style.display = TOOLS.length ? '' : 'none';
+if(TOOLS.length){
+  toolBadges.innerHTML = TOOLS.map(t => `<span class="tool-badge">${escHtml(t)}</span>`).join('');
+}
+
+/* ===================== LIGHTBOX ===================== */
+const lightbox = document.getElementById('lightbox');
+const lbImage = document.getElementById('lbImage');
+const lbCaption = document.getElementById('lbCaption');
+let lbIndex = 0;
+function openLightbox(i){
+  if(!SCREENSHOTS.length) return;
+  lbIndex = i;
+  updateLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function updateLightbox(){
+  const s = SCREENSHOTS[lbIndex];
+  lbImage.src = s.src;
+  lbImage.alt = s.caption || '';
+  lbCaption.textContent = s.caption || '';
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', ()=>{
+  lbIndex = (lbIndex - 1 + SCREENSHOTS.length) % SCREENSHOTS.length;
+  updateLightbox();
+});
+document.getElementById('lbNext').addEventListener('click', ()=>{
+  lbIndex = (lbIndex + 1) % SCREENSHOTS.length;
+  updateLightbox();
+});
+lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e)=>{
+  if(!lightbox.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+  if(e.key === 'ArrowRight') document.getElementById('lbNext').click();
+});
+
+/* ===================== TEMA SIANG / MALAM ===================== */
+const themeToggle = document.getElementById('themeToggle');
+const themeKnob = document.getElementById('themeKnob');
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  themeKnob.textContent = theme === 'light' ? '☀️' : '🌙';
+}
+async function initTheme(){
+  let saved = null;
+  try{
+    const res = await window.storage.get('theme-preference');
+    saved = res ? res.value : null;
+  }catch(e){ saved = null; }
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+}
+themeToggle.addEventListener('click', async ()=>{
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+  try{ await window.storage.set('theme-preference', next); }catch(e){ /* penyimpanan tidak tersedia */ }
+});
+initTheme();
+</script>
+</body>
+</html>
